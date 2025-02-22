@@ -231,13 +231,13 @@
                 }
             }
         },
-        "/api/v1/teachers": {
+        "/api/teachers": {
             "get": {
                 "tags": [
                     "教師"
                 ],
                 "summary": "取得所有教師",
-                "operationId": "1b119817233496117fb445542326ee18",
+                "operationId": "9115585a972eee31c1bb78305dc1620c",
                 "responses": {
                     "200": {
                         "description": "教師列表",
@@ -309,7 +309,7 @@
                     "教師"
                 ],
                 "summary": "新增教師",
-                "operationId": "f4b42e2ec9e8b91f076fd048c520f593",
+                "operationId": "232f4cec049f7f25ccdce549242471bb",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -405,6 +405,124 @@
                                                     ]
                                                 }
                                             },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "伺服器錯誤",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "伺服器錯誤"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/teachers/{user}/courses": {
+            "get": {
+                "tags": [
+                    "教師"
+                ],
+                "summary": "取得指定教師的課程列表",
+                "operationId": "c9dd695ab2be52e701eb3e74f7b18850",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "教師ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "課程列表",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "PHP基礎課程"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "學習PHP的基礎知識"
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-03-20"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-20"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "找不到教師",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "找不到教師"
+                                        },
+                                        "data": {
                                             "type": "object"
                                         }
                                     },

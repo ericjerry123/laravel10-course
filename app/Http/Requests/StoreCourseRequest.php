@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Resources\ApiResponse;
+use App\Rules\TeacherRole;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -41,7 +42,7 @@ class StoreCourseRequest extends FormRequest
             'description' => 'required|string',
             'start_time' => ['required', 'string', 'size:4', 'regex:/^([01][0-9]|2[0-3])([0-5][0-9])$/'],
             'end_time' => ['required', 'string', 'size:4', 'regex:/^([01][0-9]|2[0-3])([0-5][0-9])$/'],
-            'teacher_id' => 'required|exists:teachers,id',
+            'user_id' => ['required', 'integer', 'exists:users,id', new TeacherRole],
         ];
     }
 
@@ -56,8 +57,8 @@ class StoreCourseRequest extends FormRequest
             'end_time.required' => '結束時間是必填的',
             'end_time.size' => '結束時間必須是4位數字',
             'end_time.regex' => '結束時間格式錯誤，請使用HHMM格式（例如：0900）',
-            'teacher_id.required' => '老師是必填的',
-            'teacher_id.exists' => '老師不存在',
+            'user_id.required' => '老師是必填的',
+            'user_id.exists' => '老師不存在',
         ];
     }
 

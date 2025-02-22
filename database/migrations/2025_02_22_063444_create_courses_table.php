@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('start_time', 4)->comment('Format: HHMM');
             $table->string('end_time', 4)->comment('Format: HHMM');
-            $table->foreignId('teacher_id')->constrained('teachers');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

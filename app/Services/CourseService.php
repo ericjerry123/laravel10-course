@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Course;
 use App\Repositories\CourseRepository;
+use Illuminate\Support\Facades\Gate;
 
 class CourseService
 {
@@ -26,11 +28,34 @@ class CourseService
     /**
      * 新增課程
      *
-     * @param array $data
+     * @param array $course
      * @return \App\Models\Course
      */
-    public function create(array $data)
+    public function create(array $course)
     {
-        return $this->courseRepository->create($data);
+        return $this->courseRepository->create($course);
+    }
+
+    /**
+     * 更新課程
+     *
+     * @param array $newCourse
+     * @param \App\Models\Course $oldCourse
+     * @return \App\Models\Course
+     */
+    public function update(array $newCourse, Course $oldCourse)
+    {
+        return $this->courseRepository->update($newCourse, $oldCourse);
+    }
+
+    /**
+     * 刪除課程
+     *
+     * @param \App\Models\Course $course
+     * @return \App\Models\Course
+     */
+    public function delete(Course $course)
+    {
+        return $this->courseRepository->delete($course);
     }
 }

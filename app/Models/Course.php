@@ -14,11 +14,16 @@ class Course extends Model
         'description',
         'start_time',
         'end_time',
-        'teacher_id',
+        'user_id',
     ];
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_student', 'course_id', 'student_id')->withTimestamps();
     }
 }

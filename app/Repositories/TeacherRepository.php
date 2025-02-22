@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Teacher;
+use App\Models\User;
 
 class TeacherRepository
 {
@@ -13,17 +13,22 @@ class TeacherRepository
      */
     public function getAllTeachers()
     {
-        return Teacher::all();
+        return User::where('role', 'teacher')->get();
     }
 
     /**
      * 新增教師
      *
-     * @param array $data
-     * @return \App\Models\Teacher
+     * @param array $credentials
+     * @return \App\Models\User
      */
-    public function createTeacher(array $data)
+    public function createTeacher(array $credentials)
     {
-        return Teacher::create($data);
+        return User::create($credentials);
+    }
+
+    public function getCoursesByTeacher(User $teacher)
+    {
+        return $teacher->courses;
     }
 }

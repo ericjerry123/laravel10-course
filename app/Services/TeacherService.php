@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repositories\TeacherRepository;
 
 class TeacherService
@@ -26,11 +27,18 @@ class TeacherService
     /**
      * 新增教師
      *
-     * @param array $data
+     * @param array $credentials
      * @return \App\Models\Teacher
      */
-    public function createTeacher(array $data)
+    public function createTeacher(array $credentials)
     {
-        return $this->teacherRepository->createTeacher($data);
+        $credentials['role'] = 'teacher';
+
+        return $this->teacherRepository->createTeacher($credentials);
+    }
+
+    public function getCoursesByTeacher(User $user)
+    {
+        return $this->teacherRepository->getCoursesByTeacher($user);
     }
 }

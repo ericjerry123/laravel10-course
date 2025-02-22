@@ -25,6 +25,7 @@ class StoreRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'string'],
             'username' => [
                 'required',
                 'string',
@@ -39,6 +40,7 @@ class StoreRegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'name.required' => '姓名是必填的',
             'username.required' => '用戶名稱是必填的',
             'username.unique' => '用戶名稱已存在',
             'username.regex' => '用戶名稱不能包含空格',

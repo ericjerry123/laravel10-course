@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Resources\ApiResponse;
+use App\Models\Course;
 use App\Services\CourseService;
 use Illuminate\Http\Request;
 
@@ -117,5 +118,19 @@ class CourseController extends Controller
         }
 
         return ApiResponse::success($course, '新增課程成功', 201);
+    }
+
+    public function update(StoreCourseRequest $request, Course $course)
+    {
+        $course = $this->courseService->update($request->validated(), $course);
+
+        return ApiResponse::success($course, '更新課程成功', 200);
+    }
+
+    public function destroy(Course $course)
+    {
+        $this->courseService->delete($course);
+
+        return ApiResponse::success(null, '刪除課程成功', 200);
     }
 }

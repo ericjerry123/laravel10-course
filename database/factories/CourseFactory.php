@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Teacher;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
@@ -37,7 +37,7 @@ class CourseFactory extends Factory
                 str_pad(fake()->numberBetween(0, 59), 2, '0', STR_PAD_LEFT),
             'end_time' => str_pad(fake()->numberBetween(0, 23), 2, '0', STR_PAD_LEFT) .
                 str_pad(fake()->numberBetween(0, 59), 2, '0', STR_PAD_LEFT),
-            'teacher_id' => Teacher::factory(),
+            'user_id' => User::where('role', 'teacher')->inRandomOrder()->first()->id,
         ];
     }
 }

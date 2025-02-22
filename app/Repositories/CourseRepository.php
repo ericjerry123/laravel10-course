@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 
 class CourseRepository
@@ -13,17 +14,42 @@ class CourseRepository
      */
     public function getAll()
     {
-        return Course::all();
+        $courses = Course::with('teacher')->limit(2)->get();
+
+        return CourseResource::collection($courses);
     }
 
     /**
      * 新增課程
      *
-     * @param array $data
+     * @param array $courses
      * @return \App\Models\Course
      */
-    public function create(array $data)
+    public function create(array $courses)
     {
-        return Course::create($data);
+        return Course::create($courses);
+    }
+
+    /**
+     * 更新課程
+     *
+     * @param array $courses
+     * @param \App\Models\Course $course
+     * @return \App\Models\Course
+     */
+    public function update(array $newCourse, Course $oldCourse)
+    {
+        return $oldCourse->update($newCourse);
+    }
+
+    /**
+     * 刪除課程
+     *
+     * @param \App\Models\Course $course
+     * @return \App\Models\Course
+     */
+    public function delete(Course $course)
+    {
+        return $course->delete();
     }
 }

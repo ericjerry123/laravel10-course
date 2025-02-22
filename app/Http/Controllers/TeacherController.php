@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTeacherRequest;
+use App\Http\Requests\StoreRegisterRequest;
 use App\Http\Resources\ApiResponse;
+use App\Http\Resources\CourseResource;
 use App\Http\Resources\TeacherResponse;
+use App\Models\User;
 use App\Services\TeacherService;
 use Illuminate\Http\Request;
 
@@ -25,7 +27,7 @@ class TeacherController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/teachers",
+     *     path="/api/teachers",
      *     summary="取得所有教師",
      *     tags={"教師"},
      *     @OA\Response(
@@ -68,7 +70,7 @@ class TeacherController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/teachers",
+     *     path="/api/teachers",
      *     summary="新增教師",
      *     tags={"教師"},
      *     @OA\RequestBody(
@@ -118,15 +120,73 @@ class TeacherController extends Controller
      *     )
      * )
      */
-    public function store(StoreTeacherRequest $request)
+    public function store(StoreRegisterRequest $request)
     {
         $teacher = $this->teacherService->createTeacher($request->all());
-
 
         if (!$teacher) {
             return ApiResponse::error('新增教師失敗');
         }
 
         return ApiResponse::success(new TeacherResponse($teacher));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/teachers/{user}/courses",
+     *     summary="取得指定教師的課程列表",
+     *     tags={"教師"},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         required=true,
+     *         description="教師ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="課程列表",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="PHP基礎課程"),
+     *                     @OA\Property(property="description", type="string", example="學習PHP的基礎知識"),
+     *                     @OA\Property(property="start_date", type="string", format="date", example="2024-03-20"),
+     *                     @OA\Property(property="end_date", type="string", format="date", example="2024-06-20")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="找不到教師",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=404),
+     *             @OA\Property(property="message", type="string", example="找不到教師"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="伺服器錯誤",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=500),
+     *             @OA\Property(property="message", type="string", example="伺服器錯誤"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     )
+     * )
+     */
+    public function courses(User $user)
+    {
+        $courses = $this->teacherService->getCoursesByTeacher($user);
+
+        return ApiResponse::success(CourseResource::collection($courses));
     }
 }
