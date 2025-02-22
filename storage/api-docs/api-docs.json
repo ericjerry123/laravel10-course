@@ -14,6 +14,64 @@
     "paths": {
         "/api/v1": {},
         "/api/courses": {
+            "get": {
+                "tags": [
+                    "課程"
+                ],
+                "summary": "課程列表",
+                "operationId": "02eeda67042dba2d22a517f26fb8eaf1",
+                "responses": {
+                    "200": {
+                        "description": "課程列表",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "課程列表"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "中級英文"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "中級英文課程，適合初學者"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "example": "0900"
+                                                },
+                                                "end_time": {
+                                                    "type": "string",
+                                                    "example": "1030"
+                                                },
+                                                "teacher_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "課程"
