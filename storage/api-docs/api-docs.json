@@ -13,7 +13,239 @@
     ],
     "paths": {
         "/api/v1": {},
+        "/api/courses": {
+            "post": {
+                "tags": [
+                    "課程"
+                ],
+                "summary": "新增課程",
+                "operationId": "a4d6b7e7be59571034428ffbb86aaf0a",
+                "requestBody": {
+                    "description": "課程資料",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "start_time",
+                                    "end_time",
+                                    "teacher_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "程式設計入門"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "學習基礎程式設計概念"
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "example": "0900"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "example": "1030"
+                                    },
+                                    "teacher_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "課程新增成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "新增課程成功"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "中級英文"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "中級英文課程，適合初學者"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "example": "0900"
+                                                },
+                                                "end_time": {
+                                                    "type": "string",
+                                                    "example": "1030"
+                                                },
+                                                "teacher_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "驗證失敗",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "新增課程失敗"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "課程名稱是必填的"
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "課程描述是必填的"
+                                                    }
+                                                },
+                                                "start_time": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "開始時間是必填的"
+                                                    }
+                                                },
+                                                "end_time": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "結束時間是必填的"
+                                                    }
+                                                },
+                                                "teacher_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "老師是必填的"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/teachers": {
+            "get": {
+                "tags": [
+                    "教師"
+                ],
+                "summary": "取得所有教師",
+                "operationId": "1b119817233496117fb445542326ee18",
+                "responses": {
+                    "200": {
+                        "description": "教師列表",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Eric"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "test@example.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "伺服器錯誤",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "伺服器錯誤"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "教師"
@@ -150,7 +382,52 @@
             }
         }
     },
+    "components": {
+        "schemas": {
+            "StoreCourseRequest": {
+                "required": [
+                    "name",
+                    "description",
+                    "start_time",
+                    "end_time",
+                    "teacher_id"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "課程名稱",
+                        "type": "string",
+                        "example": "課程名稱"
+                    },
+                    "description": {
+                        "description": "課程描述",
+                        "type": "string",
+                        "example": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+                    },
+                    "start_time": {
+                        "description": "開始時間",
+                        "type": "string",
+                        "example": "0900"
+                    },
+                    "end_time": {
+                        "description": "結束時間",
+                        "type": "string",
+                        "example": "1000"
+                    },
+                    "teacher_id": {
+                        "description": "老師ID",
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
     "tags": [
+        {
+            "name": "課程",
+            "description": "課程相關操作"
+        },
         {
             "name": "教師",
             "description": "教師相關操作"

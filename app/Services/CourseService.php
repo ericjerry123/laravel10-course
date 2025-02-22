@@ -12,4 +12,9 @@ class CourseService
     {
         $this->courseRepository = $courseRepository;
     }
+
+    public function create(array $data)
+    {
+        return $this->courseRepository->create($data);
+    }
 }
