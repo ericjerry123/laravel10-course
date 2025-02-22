@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\ApiResponse;
 use App\Services\CourseService;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Tag(
@@ -117,5 +117,13 @@ class CourseController extends Controller
         }
 
         return ApiResponse::success($course, '新增課程成功', 201);
+    }
+
+    
+    public function update(UpdateCourseRequest $request, $id)
+    {
+        $course = $this->courseService->update($request->validated(), $id);
+
+        return ApiResponse::success($course, '更新課程成功', 200);
     }
 }

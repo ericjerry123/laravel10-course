@@ -26,4 +26,22 @@ class CourseRepository
     {
         return Course::create($data);
     }
+
+    /**
+     * 更新課程
+     *
+     * @param array $data
+     * @param int $id
+     * @return \App\Models\Course
+     */
+    public function update(array $data, $id)
+    {
+        $course = Course::find($id);
+
+        if (!$course) {
+            return false;
+        }
+
+        return $course->update($data);
+    }
 }
