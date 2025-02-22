@@ -27,3 +27,4 @@ Route::get('courses', [CourseController::class, 'index'])->name('courses.index')
 Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::post('login', [AuthController::class, 'login'])->name('login');
