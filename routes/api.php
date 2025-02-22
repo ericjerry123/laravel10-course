@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
@@ -24,3 +25,5 @@ Route::post('teachers', [TeacherController::class, 'store'])->name('teachers.sto
 
 Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
 Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
+
+Route::post('register', [AuthController::class, 'register'])->name('register');
