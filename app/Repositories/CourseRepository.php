@@ -4,4 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Course;
 
-class CourseRepository {}
+class CourseRepository
+{
+    public function create(array $data)
+    {
+        return Course::create($data);
+    }
+}
