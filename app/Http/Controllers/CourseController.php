@@ -23,6 +23,38 @@ class CourseController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/courses",
+     *     summary="課程列表",
+     *     tags={"課程"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="課程列表",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="課程列表"),
+     *             @OA\Property(
+     *                 property="data", 
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="中級英文"),
+     *                 @OA\Property(property="description", type="string", example="中級英文課程，適合初學者"),
+     *                 @OA\Property(property="start_time", type="string", example="0900"),
+     *                 @OA\Property(property="end_time", type="string", example="1030"),
+     *                 @OA\Property(property="teacher_id", type="integer", example=1)
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function index()
+    {
+        $courses = $this->courseService->getAll();
+
+        return ApiResponse::success($courses, '課程列表', 200);
+    }
+
+    /**
      * @OA\Post(
      *     path="/api/courses",
      *     summary="新增課程",
