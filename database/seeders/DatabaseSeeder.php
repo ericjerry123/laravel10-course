@@ -15,6 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Course::factory(10)->create();
+        Teacher::factory(5)->create();
+
+        Course::factory()
+            ->count(10)
+            ->state(function (array $attributes) {
+                return [
+                    'teacher_id' => Teacher::inRandomOrder()->first()->id,
+                ];
+            })
+            ->create();
     }
 }
