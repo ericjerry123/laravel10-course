@@ -7,6 +7,16 @@ use App\Models\Teacher;
 class TeacherRepository
 {
     /**
+     * 取得所有教師
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllTeachers()
+    {
+        return Teacher::all();
+    }
+
+    /**
      * 新增教師
      *
      * @param array $data

@@ -14,6 +14,16 @@ class TeacherService
     }
 
     /**
+     * 取得所有教師
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllTeachers()
+    {
+        return $this->teacherRepository->getAllTeachers();
+    }
+
+    /**
      * 新增教師
      *
      * @param array $data
