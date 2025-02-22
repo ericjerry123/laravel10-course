@@ -24,6 +24,49 @@ class TeacherController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/v1/teachers",
+     *     summary="取得所有教師",
+     *     tags={"教師"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="教師列表",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="Eric"),
+     *                     @OA\Property(property="email", type="string", example="test@example.com")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="伺服器錯誤",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=500),
+     *             @OA\Property(property="message", type="string", example="伺服器錯誤"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     )
+     * )
+     */
+    public function index()
+    {
+        $teachers = $this->teacherService->getAllTeachers();
+
+        if ($teachers->isEmpty()) return ApiResponse::error('找不到教師');
+
+        return ApiResponse::success(TeacherResponse::collection($teachers));
+    }
+
+    /**
      * @OA\Post(
      *     path="/api/v1/teachers",
      *     summary="新增教師",
