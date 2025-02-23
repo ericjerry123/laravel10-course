@@ -203,6 +203,42 @@ class CourseController extends Controller
         return ApiResponse::success($course, '更新課程成功', 200);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/courses/{course}",
+     *     summary="刪除課程",
+     *     tags={"課程"},
+     *     @OA\Parameter(
+     *         name="course",
+     *         in="path",
+     *         required=true,
+     *         description="課程 ID",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="課程刪除成功",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="null",
+     *                 example=null
+     *             ),
+     *             @OA\Property(property="message", type="string", example="刪除課程成功"),
+     *             @OA\Property(property="status", type="integer", example=200)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="找不到課程",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object"),
+     *             @OA\Property(property="message", type="string", example="找不到課程"),
+     *             @OA\Property(property="status", type="integer", example=404)
+     *         )
+     *     )
+     * )
+     */
     public function destroy(Course $course)
     {
         $this->courseService->delete($course);
