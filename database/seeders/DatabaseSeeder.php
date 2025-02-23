@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory(50)->create();
 
         Course::factory()
-            ->count(10)
+            ->count(30)
             ->state(function (array $attributes) {
                 return [
                     'user_id' => User::where('role', 'teacher')->inRandomOrder()->first()->id,

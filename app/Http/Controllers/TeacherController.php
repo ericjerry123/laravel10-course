@@ -28,14 +28,12 @@ class TeacherController extends Controller
     /**
      * @OA\Get(
      *     path="/api/teachers",
-     *     summary="取得所有教師",
+     *     summary="教師列表",
      *     tags={"教師"},
      *     @OA\Response(
      *         response=200,
      *         description="教師列表",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=200),
-     *             @OA\Property(property="message", type="string", example="success"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
@@ -44,17 +42,31 @@ class TeacherController extends Controller
      *                     @OA\Property(property="id", type="integer", example=1),
      *                     @OA\Property(property="name", type="string", example="Eric"),
      *                     @OA\Property(property="email", type="string", example="test@example.com")
-     *                 )
-     *             )
+     *                 ),
+     *                 example={
+     *                     {
+     *                         "id": 1,
+     *                         "name": "Eric",
+     *                         "email": "test@example.com"
+     *                     },
+     *                     {
+     *                         "id": 2,
+     *                         "name": "Mary",
+     *                         "email": "mary@example.com"
+     *                     }
+     *                 }
+     *             ),
+     *             @OA\Property(property="message", type="string", example="success"),
+     *             @OA\Property(property="status", type="integer", example=200)
      *         )
      *     ),
      *     @OA\Response(
-     *         response=500,
-     *         description="伺服器錯誤",
+     *         response=404,
+     *         description="找不到教師",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=500),
-     *             @OA\Property(property="message", type="string", example="伺服器錯誤"),
-     *             @OA\Property(property="data", type="object")
+     *             @OA\Property(property="data", type="object"),
+     *             @OA\Property(property="message", type="string", example="找不到教師"),
+     *             @OA\Property(property="status", type="integer", example=404)
      *         )
      *     )
      * )
@@ -62,9 +74,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = $this->teacherService->getAllTeachers();
-
-        if ($teachers->isEmpty()) return ApiResponse::error('找不到教師');
-
+        if ($teachers->isEmpty()) return ApiResponse::error('找不到教師', 404);
         return ApiResponse::success(TeacherResponse::collection($teachers));
     }
 
@@ -76,46 +86,40 @@ class TeacherController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="Eric"),
-     *             @OA\Property(property="email", type="string", format="email", example="test@example.com")
+     *             required={"name","username","password"},
+     *             @OA\Property(property="name", type="string", example="Eric", description="教師姓名"),
+     *             @OA\Property(property="username", type="string", example="eric", description="登入帳號"),
+     *             @OA\Property(property="password", type="string", example="12345678", description="登入密碼")
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
      *         description="教師新增成功",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=201),
-     *             @OA\Property(property="message", type="string", example="success"),
      *             @OA\Property(
      *                 property="data",
      *                 type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
      *                 @OA\Property(property="name", type="string", example="Eric"),
      *                 @OA\Property(property="email", type="string", example="test@example.com")
-     *             )
+     *             ),
+     *             @OA\Property(property="message", type="string", example="success"),
+     *             @OA\Property(property="status", type="integer", example=201)
      *         )
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="教師新增失敗",
+     *         description="驗證失敗",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=422),
-     *             @OA\Property(property="message", type="string", example="新增教師失敗"),
      *             @OA\Property(
      *                 property="data",
      *                 type="object",
-     *                 @OA\Property(property="name", type="array", @OA\Items(type="string"), example={"姓名是必填的"}),
-     *                 @OA\Property(property="email", type="array", @OA\Items(type="string"), example={"Email 格式錯誤", "Email 已存在"})
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="伺服器錯誤",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=500),
-     *             @OA\Property(property="message", type="string", example="伺服器錯誤"),
-     *             @OA\Property(property="data", type="object")
+     *                 @OA\Property(property="name", type="array", @OA\Items(type="string", example="姓名是必填的")),
+     *                 @OA\Property(property="username", type="array", @OA\Items(type="string", example={"用戶名稱是必填的", "用戶名稱已存在"})),
+     *                 @OA\Property(property="password", type="array", @OA\Items(type="string", example="密碼至少需要8個字元"))
+     *             ),
+     *             @OA\Property(property="message", type="string", example="新增教師失敗"),
+     *             @OA\Property(property="status", type="integer", example=422)
      *         )
      *     )
      * )
@@ -123,18 +127,16 @@ class TeacherController extends Controller
     public function store(StoreRegisterRequest $request)
     {
         $teacher = $this->teacherService->createTeacher($request->all());
-
         if (!$teacher) {
-            return ApiResponse::error('新增教師失敗');
+            return ApiResponse::error('新增教師失敗', 422);
         }
-
-        return ApiResponse::success(new TeacherResponse($teacher));
+        return ApiResponse::success(new TeacherResponse($teacher), 'success', 201);
     }
 
     /**
      * @OA\Get(
      *     path="/api/teachers/{user}/courses",
-     *     summary="取得指定教師的課程列表",
+     *     summary="教師課程列表",
      *     tags={"教師"},
      *     @OA\Parameter(
      *         name="user",
@@ -147,38 +149,45 @@ class TeacherController extends Controller
      *         response=200,
      *         description="課程列表",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=200),
-     *             @OA\Property(property="message", type="string", example="success"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
      *                 @OA\Items(
      *                     type="object",
      *                     @OA\Property(property="id", type="integer", example=1),
-     *                     @OA\Property(property="name", type="string", example="PHP基礎課程"),
-     *                     @OA\Property(property="description", type="string", example="學習PHP的基礎知識"),
-     *                     @OA\Property(property="start_date", type="string", format="date", example="2024-03-20"),
-     *                     @OA\Property(property="end_date", type="string", format="date", example="2024-06-20")
-     *                 )
-     *             )
+     *                     @OA\Property(property="name", type="string", example="中級英文"),
+     *                     @OA\Property(property="description", type="string", example="中級英文課程，適合初學者"),
+     *                     @OA\Property(property="start_time", type="string", example="0900"),
+     *                     @OA\Property(property="end_time", type="string", example="1030")
+     *                 ),
+     *                 example={
+     *                     {
+     *                         "id": 1,
+     *                         "name": "中級英文",
+     *                         "description": "中級英文課程，適合初學者",
+     *                         "start_time": "0900",
+     *                         "end_time": "1030"
+     *                     },
+     *                     {
+     *                         "id": 2,
+     *                         "name": "程式設計入門",
+     *                         "description": "學習基礎程式設計概念",
+     *                         "start_time": "1400",
+     *                         "end_time": "1530"
+     *                     }
+     *                 }
+     *             ),
+     *             @OA\Property(property="message", type="string", example="success"),
+     *             @OA\Property(property="status", type="integer", example=200)
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
      *         description="找不到教師",
      *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=404),
+     *             @OA\Property(property="data", type="object"),
      *             @OA\Property(property="message", type="string", example="找不到教師"),
-     *             @OA\Property(property="data", type="object")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="伺服器錯誤",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="integer", example=500),
-     *             @OA\Property(property="message", type="string", example="伺服器錯誤"),
-     *             @OA\Property(property="data", type="object")
+     *             @OA\Property(property="status", type="integer", example=404)
      *         )
      *     )
      * )
@@ -186,7 +195,6 @@ class TeacherController extends Controller
     public function courses(User $user)
     {
         $courses = $this->teacherService->getCoursesByTeacher($user);
-
         return ApiResponse::success(CourseResource::collection($courses));
     }
 }

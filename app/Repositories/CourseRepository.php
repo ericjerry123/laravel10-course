@@ -27,7 +27,9 @@ class CourseRepository
      */
     public function create(array $courses)
     {
-        return Course::create($courses);
+        $course = Course::create($courses);
+        
+        return new CourseResource($course);
     }
 
     /**
@@ -35,11 +37,12 @@ class CourseRepository
      *
      * @param array $courses
      * @param \App\Models\Course $course
-     * @return \App\Models\Course
+     * @return CourseResource
      */
     public function update(array $newCourse, Course $oldCourse)
     {
-        return $oldCourse->update($newCourse);
+        $oldCourse->update($newCourse);
+        return new CourseResource($oldCourse->fresh());
     }
 
     /**

@@ -27,42 +27,57 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "中級英文"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "中級英文課程，適合初學者"
+                                                    },
+                                                    "start_time": {
+                                                        "type": "string",
+                                                        "example": "0900"
+                                                    },
+                                                    "end_time": {
+                                                        "type": "string",
+                                                        "example": "1030"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "中級英文",
+                                                    "description": "中級英文課程，適合初學者",
+                                                    "start_time": "0900",
+                                                    "end_time": "1030"
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "name": "程式設計入門",
+                                                    "description": "學習基礎程式設計概念",
+                                                    "start_time": "1400",
+                                                    "end_time": "1530"
+                                                }
+                                            ]
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "課程列表"
+                                            "example": "success"
                                         },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "中級英文"
-                                                },
-                                                "description": {
-                                                    "type": "string",
-                                                    "example": "中級英文課程，適合初學者"
-                                                },
-                                                "start_time": {
-                                                    "type": "string",
-                                                    "example": "0900"
-                                                },
-                                                "end_time": {
-                                                    "type": "string",
-                                                    "example": "1030"
-                                                },
-                                                "teacher_id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                }
-                                            },
-                                            "type": "object"
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
                                         }
                                     },
                                     "type": "object"
@@ -89,26 +104,31 @@
                                     "description",
                                     "start_time",
                                     "end_time",
-                                    "teacher_id"
+                                    "user_id"
                                 ],
                                 "properties": {
                                     "name": {
+                                        "description": "課程名稱",
                                         "type": "string",
                                         "example": "程式設計入門"
                                     },
                                     "description": {
+                                        "description": "課程描述",
                                         "type": "string",
                                         "example": "學習基礎程式設計概念"
                                     },
                                     "start_time": {
+                                        "description": "開始時間（24小時制）",
                                         "type": "string",
                                         "example": "0900"
                                     },
                                     "end_time": {
+                                        "description": "結束時間（24小時制）",
                                         "type": "string",
                                         "example": "1030"
                                     },
-                                    "teacher_id": {
+                                    "user_id": {
+                                        "description": "教師ID",
                                         "type": "integer",
                                         "example": 1
                                     }
@@ -125,14 +145,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "新增課程成功"
-                                        },
                                         "data": {
                                             "properties": {
                                                 "id": {
@@ -141,11 +153,11 @@
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "中級英文"
+                                                    "example": "程式設計入門"
                                                 },
                                                 "description": {
                                                     "type": "string",
-                                                    "example": "中級英文課程，適合初學者"
+                                                    "example": "學習基礎程式設計概念"
                                                 },
                                                 "start_time": {
                                                     "type": "string",
@@ -154,13 +166,17 @@
                                                 "end_time": {
                                                     "type": "string",
                                                     "example": "1030"
-                                                },
-                                                "teacher_id": {
-                                                    "type": "integer",
-                                                    "example": 1
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "新增課程成功"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
                                         }
                                     },
                                     "type": "object"
@@ -174,15 +190,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "新增課程失敗"
-                                        },
-                                        "errors": {
+                                        "data": {
                                             "properties": {
                                                 "name": {
                                                     "type": "array",
@@ -212,7 +220,7 @@
                                                         "example": "結束時間是必填的"
                                                     }
                                                 },
-                                                "teacher_id": {
+                                                "user_id": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string",
@@ -221,6 +229,186 @@
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "新增課程失敗"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/courses/{course}": {
+            "put": {
+                "tags": [
+                    "課程"
+                ],
+                "summary": "更新課程",
+                "operationId": "5f1701987d5321072267c5f888fd05af",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "課程 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "課程資料",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "start_time",
+                                    "end_time",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "課程名稱",
+                                        "type": "string",
+                                        "example": "中級英文"
+                                    },
+                                    "description": {
+                                        "description": "課程描述",
+                                        "type": "string",
+                                        "example": "中級英文課程，適合初學者"
+                                    },
+                                    "start_time": {
+                                        "description": "開始時間（24小時制）",
+                                        "type": "string",
+                                        "example": "0900"
+                                    },
+                                    "end_time": {
+                                        "description": "結束時間（24小時制）",
+                                        "type": "string",
+                                        "example": "1030"
+                                    },
+                                    "user_id": {
+                                        "description": "教師ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "課程更新成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "中級英文"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "中級英文課程，適合初學者"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "example": "0900"
+                                                },
+                                                "end_time": {
+                                                    "type": "string",
+                                                    "example": "1030"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "更新課程成功"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "驗證失敗",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "課程名稱是必填的"
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "課程描述是必填的"
+                                                    }
+                                                },
+                                                "start_time": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "開始時間是必填的"
+                                                    }
+                                                },
+                                                "end_time": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "結束時間是必填的"
+                                                    }
+                                                },
+                                                "user_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "老師是必填的"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "更新課程失敗"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 422
                                         }
                                     },
                                     "type": "object"
@@ -236,7 +424,7 @@
                 "tags": [
                     "教師"
                 ],
-                "summary": "取得所有教師",
+                "summary": "教師列表",
                 "operationId": "9115585a972eee31c1bb78305dc1620c",
                 "responses": {
                     "200": {
@@ -245,14 +433,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "success"
-                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
@@ -271,7 +451,27 @@
                                                     }
                                                 },
                                                 "type": "object"
-                                            }
+                                            },
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "Eric",
+                                                    "email": "test@example.com"
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "name": "Mary",
+                                                    "email": "mary@example.com"
+                                                }
+                                            ]
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
                                         }
                                     },
                                     "type": "object"
@@ -279,22 +479,22 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "伺服器錯誤",
+                    "404": {
+                        "description": "找不到教師",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 500
+                                        "data": {
+                                            "type": "object"
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "伺服器錯誤"
+                                            "example": "找不到教師"
                                         },
-                                        "data": {
-                                            "type": "object"
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
                                         }
                                     },
                                     "type": "object"
@@ -315,15 +515,26 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "name",
+                                    "username",
+                                    "password"
+                                ],
                                 "properties": {
                                     "name": {
+                                        "description": "教師姓名",
                                         "type": "string",
                                         "example": "Eric"
                                     },
-                                    "email": {
+                                    "username": {
+                                        "description": "登入帳號",
                                         "type": "string",
-                                        "format": "email",
-                                        "example": "test@example.com"
+                                        "example": "eric"
+                                    },
+                                    "password": {
+                                        "description": "登入密碼",
+                                        "type": "string",
+                                        "example": "12345678"
                                     }
                                 },
                                 "type": "object"
@@ -338,14 +549,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 201
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "success"
-                                        },
                                         "data": {
                                             "properties": {
                                                 "id": {
@@ -362,6 +565,14 @@
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
                                         }
                                     },
                                     "type": "object"
@@ -370,65 +581,47 @@
                         }
                     },
                     "422": {
-                        "description": "教師新增失敗",
+                        "description": "驗證失敗",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 422
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "新增教師失敗"
-                                        },
                                         "data": {
                                             "properties": {
                                                 "name": {
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "姓名是必填的"
-                                                    ]
+                                                        "type": "string",
+                                                        "example": "姓名是必填的"
+                                                    }
                                                 },
-                                                "email": {
+                                                "username": {
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "Email 格式錯誤",
-                                                        "Email 已存在"
-                                                    ]
+                                                        "type": "string",
+                                                        "example": [
+                                                            "用戶名稱是必填的",
+                                                            "用戶名稱已存在"
+                                                        ]
+                                                    }
+                                                },
+                                                "password": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "密碼至少需要8個字元"
+                                                    }
                                                 }
                                             },
                                             "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "伺服器錯誤",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 500
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "伺服器錯誤"
+                                            "example": "新增教師失敗"
                                         },
-                                        "data": {
-                                            "type": "object"
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 422
                                         }
                                     },
                                     "type": "object"
@@ -444,7 +637,7 @@
                 "tags": [
                     "教師"
                 ],
-                "summary": "取得指定教師的課程列表",
+                "summary": "教師課程列表",
                 "operationId": "c9dd695ab2be52e701eb3e74f7b18850",
                 "parameters": [
                     {
@@ -464,14 +657,6 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "success"
-                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
@@ -482,25 +667,47 @@
                                                     },
                                                     "name": {
                                                         "type": "string",
-                                                        "example": "PHP基礎課程"
+                                                        "example": "中級英文"
                                                     },
                                                     "description": {
                                                         "type": "string",
-                                                        "example": "學習PHP的基礎知識"
+                                                        "example": "中級英文課程，適合初學者"
                                                     },
-                                                    "start_date": {
+                                                    "start_time": {
                                                         "type": "string",
-                                                        "format": "date",
-                                                        "example": "2024-03-20"
+                                                        "example": "0900"
                                                     },
-                                                    "end_date": {
+                                                    "end_time": {
                                                         "type": "string",
-                                                        "format": "date",
-                                                        "example": "2024-06-20"
+                                                        "example": "1030"
                                                     }
                                                 },
                                                 "type": "object"
-                                            }
+                                            },
+                                            "example": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "中級英文",
+                                                    "description": "中級英文課程，適合初學者",
+                                                    "start_time": "0900",
+                                                    "end_time": "1030"
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "name": "程式設計入門",
+                                                    "description": "學習基礎程式設計概念",
+                                                    "start_time": "1400",
+                                                    "end_time": "1530"
+                                                }
+                                            ]
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
                                         }
                                     },
                                     "type": "object"
@@ -514,39 +721,16 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 404
+                                        "data": {
+                                            "type": "object"
                                         },
                                         "message": {
                                             "type": "string",
                                             "example": "找不到教師"
                                         },
-                                        "data": {
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "伺服器錯誤",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
                                         "status": {
                                             "type": "integer",
-                                            "example": 500
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "伺服器錯誤"
-                                        },
-                                        "data": {
-                                            "type": "object"
+                                            "example": 404
                                         }
                                     },
                                     "type": "object"

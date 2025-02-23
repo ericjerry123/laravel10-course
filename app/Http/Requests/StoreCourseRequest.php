@@ -64,6 +64,12 @@ class StoreCourseRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
+        if ($this->isMethod('put')) {
+            throw new HttpResponseException(
+                ApiResponse::error('更新課程失敗', 422, $validator->errors())
+            );
+        }
+
         throw new HttpResponseException(
             ApiResponse::error('新增課程失敗', 422, $validator->errors())
         );

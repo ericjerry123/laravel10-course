@@ -20,11 +20,6 @@ class CourseResource extends JsonResource
             'description' => $this->description,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
-            'teacher' => [
-                'id' => $this->teacher->id,
-                'name' => $this->teacher->name,
-                'email' => $this->teacher->email,
-            ],
         ];
     }
 }

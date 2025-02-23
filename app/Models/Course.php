@@ -17,6 +17,11 @@ class Course extends Model
         'user_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function teacher()
     {
         return $this->belongsTo(User::class, 'user_id');
