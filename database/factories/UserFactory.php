@@ -33,6 +33,18 @@ class UserFactory extends Factory
     }
 
     /**
+     * 設置用戶為老師角色
+     */
+    public function teacher(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'teacher',
+            ];
+        });
+    }
+
+    /**
      * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static
